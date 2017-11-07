@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: benchmark
+    service: slow
+  name: service-benchmark
+  namespace: default
+spec:
+      containers:
+          - name: wrk-bench
+            image: wrk-bench
+            command: ["wrk", "-d5m", "-t1", "-c1", "-s", "/data/bench.lua", "http://192.168.99.100/test-service"]
+            imagePullPolicy: Never
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 30

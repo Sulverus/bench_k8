@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: benchmark
+    service: slow
+  name: service-benchmark
+  namespace: default
+spec:
+      containers:
+          - name: ya-bench
+            image: ya-bench
+            imagePullPolicy: Never
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 30

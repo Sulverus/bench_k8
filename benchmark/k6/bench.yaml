@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: benchmark
+    service: slow
+  name: service-benchmark
+  namespace: default
+spec:
+      containers:
+          - name: k6-bench
+            image: k6-bench
+            imagePullPolicy: Never
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 30

@@ -1,0 +1,22 @@
+global:
+  resourcesLimit: false
+image: service
+imagePullPolicy: Never
+replicas: 1
+
+storage:
+    master:
+        image: tarantool-master
+        port: 3315
+    slave:
+        image: tarantool-slave
+        port: 3316
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 100Mi
+  limits:
+    cpu: 100m
+    memory: 200Mi
+

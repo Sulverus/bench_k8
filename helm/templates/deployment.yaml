@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      service: {{ .Release.Name }}
+      app: service
+  replicas: {{ .Values.replicas }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  minReadySeconds: 3
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        service: {{ .Release.Name }}
+        app: service
+    spec:
+      containers:
+        - name: service
+          image: {{ .Values.image }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: 8890
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /_info
+              port: 8890
+            initialDelaySeconds: 3
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 3
+        - name: master
+          image: {{ .Values.storage.master.image }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.storage.master.port }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+        - name: slave
+          image: {{ .Values.storage.slave.image }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.storage.slave.port }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}

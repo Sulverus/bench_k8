@@ -1,0 +1,23 @@
+phantom:
+    writelog: "true"
+    enabled: true
+    package: yandextank.plugins.Phantom
+    #threads: 1
+    #buffered_seconds: 5
+    address: 192.168.99.100:80              
+    load_profile:
+        load_type: rps
+        schedule: const(10, 10s)               
+    header_http: '1.1'
+    headers: |
+          [Host:192.168.99.100 ]
+          [User-Agent: Tank]
+          [Connection: Keep-Alive]
+    ammofile: ammo.txt
+overload:
+    enabled: true
+    package: yandextank.plugins.DataUploader
+    token_file: token.txt
+#console:
+#    enabled: false
+#    package: yandextank.plugins.Console

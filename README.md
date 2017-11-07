@@ -1,2 +1,6 @@
-# bench_k8
-Highload++ Load tests demo
+### Инициализация
+```
+eval $(minikube docker-env)
+make build
+make deploy
+```

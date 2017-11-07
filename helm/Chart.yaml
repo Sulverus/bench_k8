@@ -1,0 +1,4 @@
+apiVersion: v1
+name: service
+version: 1.0.0
+description: Slow service demo
